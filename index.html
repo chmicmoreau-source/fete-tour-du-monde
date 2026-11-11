@@ -244,8 +244,8 @@ td.petit { white-space: nowrap; }
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="config.js?v=202611111728"></script>
-<script src="acces.js?v=202611111728"></script>
+<script src="config.js?v=202611111732"></script>
+<script src="acces.js?v=202611111732"></script>
 <script>
 (function () {
   "use strict";
@@ -343,7 +343,7 @@ td.petit { white-space: nowrap; }
     var rep = F.filter(function (f) { return f.statut && f.statut !== "sans"; });
     var pers = P.reduce(function (a, f) { return a + num(f.personnes); }, 0);
     var attendu = P.reduce(function (a, f) { return a + BAREME(num(f.personnes)); }, 0);
-    var recu = F.reduce(function (a, f) { return a + num(f.recu); }, 0);
+    var recu = totalRecu();
     var dep = FETE.lire("depenses").reduce(function (a, d) { return a + num(d.reel); }, 0);
     var listeF = F.filter(function (f) { return f.groupe !== "Invités"; });
     var taux = listeF.length ? Math.round(100 * listeF.filter(function (f) { return f.statut !== "sans"; }).length / listeF.length) : 0;
@@ -351,7 +351,7 @@ td.petit { white-space: nowrap; }
     var tu = [
       ["Foyers qui ont répondu", rep.length + "<small> / " + F.length + "</small>", taux + " % de la liste", taux],
       ["Attendus", String(pers), P.length + " foyers présents · " + (R.anneeDerniere || 124) + " l'an dernier"],
-      ["Offrandes", eur(recu).replace(" €", "") + "<small> / " + eur(attendu) + "</small>", "reste " + eur(Math.max(0, attendu - recu)) + " · dépensé " + eur(dep), attendu ? Math.round(100 * recu / attendu) : 0],
+      ["Offrandes reçues", eur(recu).replace(" €", "") + "<small> €</small>", "suggéré " + eur(attendu) + " · dépensé " + eur(dep), attendu ? Math.round(100 * recu / attendu) : 0],
       ["Sans réponse", String(F.filter(function (f) { return f.statut === "sans"; }).length), "foyers à qui demander"]
     ];
     var html = "<h2>Où on en est</h2><p class='lede'>Tout ce qui est saisi dans les onglets se retrouve ici, pour toute l'équipe, en direct.</p>" +
@@ -439,38 +439,63 @@ td.petit { white-space: nowrap; }
   }
 
   /* ------------------------------------------------------------- offrandes */
-  var seulementDu = false;
+  /* Le barème n'est qu'une suggestion : chacun donne ce qu'il veut. Le montant
+     qui compte est celui qu'on saisit dans « Reçu », librement. Les dons sans
+     nom (boîte sur place, enveloppe anonyme) ont leur propre liste. */
+  function totalRecu() {
+    return foyers().reduce(function (a, f) { return a + num(f.recu); }, 0) +
+      FETE.lire("dons").reduce(function (a, d) { return a + num(d.montant); }, 0);
+  }
+  var filtreO = "present";
   function vOffrandes() {
-    var P = foyers().filter(function (f) { return f.statut === "present" || num(f.recu) > 0; });
-    if (seulementDu) { P = P.filter(function (f) { return num(f.recu) < BAREME(num(f.personnes)); }); }
     var tous = foyers();
-    var attendu = tous.filter(function (f) { return f.statut === "present"; }).reduce(function (a, f) { return a + BAREME(num(f.personnes)); }, 0);
-    var recu = tous.reduce(function (a, f) { return a + num(f.recu); }, 0);
+    var P = tous.filter(function (f) {
+      if (filtreO === "present") { return f.statut === "present" || num(f.recu) > 0; }
+      if (filtreO === "attente") { return f.statut === "present" && !num(f.recu); }
+      if (filtreO === "recu") { return num(f.recu) > 0; }
+      return true;
+    });
+    var suggere = tous.filter(function (f) { return f.statut === "present"; }).reduce(function (a, f) { return a + BAREME(num(f.personnes)); }, 0);
+    var recu = totalRecu();
+    var donneurs = tous.filter(function (f) { return num(f.recu) > 0; }).length;
+    var dons = FETE.lire("dons");
     var dep = FETE.lire("depenses"), depR = dep.reduce(function (a, d) { return a + num(d.reel); }, 0);
     var R = reglages();
-    var html = "<h2>Les offrandes</h2><p class='lede'>Participation volontaire par foyer : 3 € pour une personne, 5 € pour deux, 7 € pour trois, 10 € à partir de quatre. Règlement souhaité avant le 23 novembre. Saisis chaque somme dès qu'elle arrive, espèces comprises.</p>" +
-      "<div class='tuiles'><div class='tuile'><div class='lab'>Reçu</div><div class='val'>" + eur(recu) + "</div><div class='sous'>sur " + eur(attendu) + " suggérés</div><div class='jauge'><i style='width:" + (attendu ? Math.min(100, 100 * recu / attendu) : 0) + "%'></i></div></div>" +
-      "<div class='tuile'><div class='lab'>Dépensé</div><div class='val'>" + eur(depR) + "</div><div class='sous'>prévu " + eur(dep.reduce(function (a, d) { return a + num(d.prevu); }, 0)) + "</div></div>" +
-      "<div class='tuile'><div class='lab'>Caisse</div><div class='val'>" + eur(num(R.caisseDepart) + recu - depR) + "</div><div class='sous'>" + (num(R.caisseDepart) ? "dont " + eur(R.caisseDepart) + " de caisse antérieure" : "reçu moins dépensé") + "</div></div></div>" +
-      "<h3>Par foyer</h3><div class='outils'><label><input type='checkbox' id='o-du'" + (seulementDu ? " checked" : "") + "> seulement ceux qui n'ont pas encore réglé</label></div>" +
-      "<div class='tableau'><table><tr><th>Foyer</th><th class='n'>Pers.</th><th class='n'>Suggéré</th><th class='n'>Reçu</th><th>Mode</th><th>État</th></tr>" +
+    var html = "<h2>Les offrandes</h2><p class='lede'>Participation <b>volontaire</b> : le barème (3 € pour une personne, 5 € pour deux, 7 € pour trois, 10 € à partir de quatre) n'est qu'une suggestion. " +
+      "Saisis dans « Reçu » le montant réellement donné, quel qu'il soit. La date se remplit toute seule et reste modifiable.</p>" +
+      "<div class='tuiles'><div class='tuile'><div class='lab'>Reçu</div><div class='val'>" + eur(recu) + "</div><div class='sous'>" + donneurs + " foyers" + (dons.length ? " + " + dons.length + " dons sans nom" : "") + "</div><div class='jauge'><i style='width:" + (suggere ? Math.min(100, 100 * recu / suggere) : 0) + "%'></i></div></div>" +
+      "<div class='tuile'><div class='lab'>Suggéré (pour info)</div><div class='val'>" + eur(suggere) + "</div><div class='sous'>si chaque foyer présent suivait le barème</div></div>" +
+      "<div class='tuile'><div class='lab'>Caisse</div><div class='val'>" + eur(num(R.caisseDepart) + recu - depR) + "</div><div class='sous'>reçu moins dépensé (" + eur(depR) + ")</div></div></div>" +
+      "<h3>Par foyer</h3><div class='outils'><select id='o-f'>" + [["present", "Foyers présents"], ["attente", "Présents, rien reçu encore"], ["recu", "Ont déjà donné"], ["tous", "Tous les foyers"]].map(function (o) {
+        return "<option value='" + o[0] + "'" + (o[0] === filtreO ? " selected" : "") + ">" + o[1] + "</option>"; }).join("") + "</select><span class='petit'>" + P.length + " foyers</span></div>" +
+      "<div class='tableau'><table><tr><th>Foyer</th><th class='n'>Pers.</th><th class='n'>Suggéré</th><th class='n'>Reçu (€)</th><th>Mode</th><th class='cache-mobile'>Reçu le</th><th></th></tr>" +
       (P.length ? P.map(function (f) {
-        var du = BAREME(num(f.personnes)), r = num(f.recu);
-        var et = r >= du && du ? "<span class='tampon t-present'>Réglé</span>" : r > 0 ? "<span class='tampon t-compte'>En partie</span>" : "<span class='tampon t-sans'>À venir</span>";
-        return "<tr data-id='" + h(f._id) + "'><td>" + h(f.nom) + "<br><span class='petit'>" + h(f.groupe) + "</span></td><td class='n'>" + (num(f.personnes) || "") + "</td><td class='n'>" + eur(du) + "</td>" +
-          "<td class='n'><input type='number' step='0.5' min='0' data-k='recu' value='" + (r || "") + "'></td>" +
-          "<td><select data-k='mode'>" + MODES.map(function (m) { return "<option" + (m === (f.mode || "") ? " selected" : "") + ">" + m + "</option>"; }).join("") + "</select></td><td>" + et + "</td></tr>";
-      }).join("") : "<tr><td colspan='6' class='vide'>Aucun foyer à afficher.</td></tr>") + "</table></div>" +
+        var r = num(f.recu);
+        return "<tr data-id='" + h(f._id) + "'><td>" + h(f.nom) + "<br><span class='petit'>" + h(f.groupe) + "</span></td><td class='n'>" + (num(f.personnes) || "") + "</td>" +
+          "<td class='n petit'>" + (f.statut === "present" ? eur(BAREME(num(f.personnes))) : "—") + "</td>" +
+          "<td class='n'><input type='number' step='0.5' min='0' data-k='recu' placeholder='0' value='" + (r || "") + "'></td>" +
+          "<td><select data-k='mode'>" + MODES.map(function (m) { return "<option" + (m === (f.mode || "") ? " selected" : "") + ">" + m + "</option>"; }).join("") + "</select></td>" +
+          "<td class='cache-mobile'><input type='date' data-k='recuLe' value='" + h(f.recuLe) + "'></td>" +
+          "<td>" + (r > 0 ? "<span class='tampon t-present'>Reçu</span>" : "") + "</td></tr>";
+      }).join("") : "<tr><td colspan='7' class='vide'>Aucun foyer à afficher.</td></tr>") + "</table></div>" +
+      "<h3>Dons sans nom</h3><p class='lede'>La boîte à offrandes le jour J, une enveloppe sans nom, un don qu'on ne sait pas rattacher.</p><div id='o-dons'></div>" +
       "<p class='petit' style='margin-top:12px'>Les achats et les remboursements sont dans l'onglet 🧾 Les dépenses.</p>";
     $("v-offrandes").innerHTML = html;
-    $("o-du").onchange = function () { seulementDu = this.checked; vOffrandes(); };
+    $("o-f").onchange = function () { filtreO = this.value; vOffrandes(); };
     $("v-offrandes").querySelectorAll("tr[data-id] [data-k]").forEach(function (el) {
       el.onchange = function () {
-        var id = el.closest("tr").getAttribute("data-id"), o = {};
-        o[el.getAttribute("data-k")] = el.type === "number" ? num(el.value) : el.value;
-        maj("foyers", FETE.un("foyers", id), o);
+        var id = el.closest("tr").getAttribute("data-id"), f = FETE.un("foyers", id), o = {};
+        var k = el.getAttribute("data-k");
+        o[k] = el.type === "number" ? num(el.value) : el.value;
+        if (k === "recu" && o.recu > 0 && !f.recuLe) { o.recuLe = new Date().toISOString().slice(0, 10); }
+        maj("foyers", f, o);
       };
     });
+    liste($("o-dons"), "dons", [
+      { k: "date", lab: "Date", type: "date" }, { k: "montant", lab: "Montant (€)", type: "num" },
+      { k: "mode", lab: "Mode", type: "select", options: MODES }, { k: "note", lab: "Précision", largeur: "180px" }
+    ], { ajout: "Ajouter un don sans nom", defaut: { date: new Date().toISOString().slice(0, 10) },
+      total: function (d) { return d.length ? "<tr class='total'><td>Total</td><td class='n'>" + eur(d.reduce(function (a, x) { return a + num(x.montant); }, 0)) + "</td><td colspan='3'></td></tr>" : ""; } });
   }
 
   /* -------------------------------------------------------------- dépenses */
@@ -479,7 +504,7 @@ td.petit { white-space: nowrap; }
     var D = FETE.lire("depenses"), F = foyers(), R = reglages();
     var prevu = D.reduce(function (a, d) { return a + num(d.prevu); }, 0);
     var reel = D.reduce(function (a, d) { return a + num(d.reel); }, 0);
-    var recu = F.reduce(function (a, f) { return a + num(f.recu); }, 0);
+    var recu = totalRecu();
     var aRemb = D.filter(function (d) { return num(d.reel) && d.paye && !d.rembourse; });
     var parQui = {};
     aRemb.forEach(function (d) { parQui[d.paye] = (parQui[d.paye] || 0) + num(d.reel); });
