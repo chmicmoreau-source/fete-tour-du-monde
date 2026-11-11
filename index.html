@@ -244,8 +244,8 @@ td.petit { white-space: nowrap; }
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="config.js?v=202611111732"></script>
-<script src="acces.js?v=202611111732"></script>
+<script src="config.js?v=202611112021"></script>
+<script src="acces.js?v=202611112021"></script>
 <script>
 (function () {
   "use strict";
@@ -603,7 +603,8 @@ td.petit { white-space: nowrap; }
   /* ----------------------------------------------------------- après-midi */
   function vApresMidi() {
     $("v-apresmidi").innerHTML = "<h2>L'après-midi</h2><p class='lede'>Le déroulé heure par heure, puis les animations : chaque idée peut être proposée, retenue ou écartée. Thème : chacun vient aux couleurs d'un pays.</p>" +
-      "<h3>Le déroulé</h3><div id='a-d'></div><h3>Les animations et les jeux</h3><div id='a-a'></div>";
+      "<h3>Le déroulé</h3><div id='a-d'></div><h3>Les animations et les jeux</h3><div id='a-a'></div>" +
+      "<h3>Les musiques à récolter</h3><p class='lede'>Les chansons dansantes à demander aux familles, pays par pays. Coche quand la musique est reçue, pour la playlist de la sono.</p><div id='a-m'></div>";
     liste($("a-d"), "deroule", [
       { k: "heure", lab: "Heure", largeur: "70px" }, { k: "quoi", lab: "Quoi", type: "area", largeur: "220px" }, { k: "qui", lab: "Qui" }, { k: "note", lab: "Note", mobile: false }
     ], { ajout: "Ajouter un moment", tri: function (a, b) { return String(a.heure || "99").localeCompare(String(b.heure || "99")); } });
@@ -612,11 +613,20 @@ td.petit { white-space: nowrap; }
       { k: "qui", lab: "Qui l'anime" }, { k: "propose", lab: "Proposé par", mobile: false },
       { k: "statut", lab: "Statut", type: "select", options: ["Idée", "Retenue", "Prête", "Écartée"] }
     ], { ajout: "Proposer une animation", defaut: { statut: "Idée" } });
+    liste($("a-m"), "musiques", [
+      { k: "aupres", lab: "À demander à", largeur: "150px" }, { k: "pays", lab: "Pays / style" },
+      { k: "titres", lab: "Titres reçus", type: "area", largeur: "200px" }, { k: "recu", lab: "Reçu", type: "check" },
+      { k: "note", lab: "Note", mobile: false }
+    ], { ajout: "Ajouter une famille ou un pays" });
   }
 
   /* ------------------------------------------------------------------ dates */
   function vDates() {
-    $("v-dates").innerHTML = "<h2>Les dates clés</h2><p class='lede'>Coche ce qui est fait : la prochaine échéance non faite remonte dans l'aperçu.</p><div id='d-j'></div>" +
+    var orphelines = FETE.lire("taches").filter(function (t) { return !t.fait && !String(t.qui || "").trim(); });
+    $("v-dates").innerHTML = "<h2>Qui fait quoi</h2><p class='lede'>La répartition de l'équipe. Une tâche sans personne ressort en rouge : il faut quelqu'un.</p>" +
+      (orphelines.length ? "<div class='etat' style='border-color:var(--rouge);background:var(--rouge-fond)'>💢 Personne pour : " + orphelines.map(function (t) { return h(t.quoi); }).join(" · ") + "</div>" : "") +
+      "<div id='d-t'></div>" +
+      "<h2>Les dates clés</h2><p class='lede'>Coche ce qui est fait : la prochaine échéance non faite remonte dans l'aperçu.</p><div id='d-j'></div>" +
       "<h2>Ce qui reste à trancher</h2><p class='lede'>Une question, puis la décision prise et par qui.</p><div id='d-o'></div>";
     liste($("d-j"), "jalons", [
       { k: "date", lab: "Date", type: "date" }, { k: "quoi", lab: "Quoi", type: "area", largeur: "220px" }, { k: "qui", lab: "Qui" }, { k: "fait", lab: "Fait", type: "check" }
@@ -625,6 +635,12 @@ td.petit { white-space: nowrap; }
       { k: "question", lab: "Question", type: "area", largeur: "220px" }, { k: "decision", lab: "Décision", type: "area", largeur: "200px" },
       { k: "par", lab: "Par qui" }, { k: "tranche", lab: "Tranché", type: "check" }
     ], { ajout: "Ajouter une question", tri: function (a, b) { return (a.tranche ? 1 : 0) - (b.tranche ? 1 : 0) || (a.ordre || 0) - (b.ordre || 0); } });
+    liste($("d-t"), "taches", [
+      { k: "qui", lab: "Qui", largeur: "110px" }, { k: "quoi", lab: "Quoi", type: "area", largeur: "260px" },
+      { k: "echeance", lab: "Pour le", type: "date", mobile: false }, { k: "fait", lab: "Fait", type: "check" }
+    ], { ajout: "Ajouter une tâche", tri: function (a, b) {
+      return (a.fait ? 1 : 0) - (b.fait ? 1 : 0) || (String(a.qui || "").trim() ? 1 : 0) - (String(b.qui || "").trim() ? 1 : 0) ||
+        String(a.qui || "").localeCompare(String(b.qui || ""), "fr") || (a.ordre || 0) - (b.ordre || 0); } });
   }
 
   function ajuster() {
