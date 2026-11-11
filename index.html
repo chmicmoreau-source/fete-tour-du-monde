@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tour du monde — organisateurs</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root {
+  --papier: #F4EBDC; --carte: #FFFBF3; --kraft: #E7D8BE; --trait: #D8C7A8;
+  --encre: #3B2411; --encre-douce: #6E5A44; --pale: #8D7A63;
+  --rouge: #B23A2E; --ocean: #1F5F8B; --jungle: #2F6B3F; --or: #B9821F;
+  --rouge-fond: #F6DCD6; --ocean-fond: #D7E6F1; --jungle-fond: #DCEBDD; --or-fond: #F4E4C2;
+  --ombre: 0 1px 0 rgba(59,36,17,.06), 0 6px 18px rgba(59,36,17,.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papier: #17110B; --carte: #221A12; --kraft: #2E2318; --trait: #3E3022;
+    --encre: #F1E5D1; --encre-douce: #CDBBA0; --pale: #9C8A72;
+    --rouge: #E07A6C; --ocean: #6FAED8; --jungle: #7DBB8A; --or: #E2B354;
+    --rouge-fond: #3A1F1A; --ocean-fond: #16293A; --jungle-fond: #1A2E20; --or-fond: #3A2D14;
+    --ombre: 0 6px 18px rgba(0,0,0,.35);
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--papier); color: var(--encre);
+  font: 16px/1.5 Lora, Georgia, serif;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 79px, rgba(141,122,99,.10) 79px 80px),
+    repeating-linear-gradient(90deg, transparent 0 79px, rgba(141,122,99,.10) 79px 80px);
+}
+h1, h2, h3, .bebas, nav button, .tuile .lab, th { font-family: "Bebas Neue", Impact, sans-serif; letter-spacing: .04em; font-weight: 400; }
+.page { max-width: 1040px; margin: 0 auto; padding: 0 16px 80px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* --- en-tête : panneau de départ --- */
+header.haut { padding: 26px 0 8px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 26px; }
+.sur { font-family: "Bebas Neue", sans-serif; color: var(--or); letter-spacing: .18em; font-size: 15px; }
+.compte { display: flex; align-items: baseline; gap: 12px; }
+.compte .j { font-family: "Bebas Neue", sans-serif; font-size: clamp(64px, 14vw, 120px); line-height: .9; }
+.compte .q { font-style: italic; color: var(--encre-douce); }
+.ou { margin: 4px 0 0; color: var(--encre-douce); font-size: 15px; }
+.moi { margin-left: auto; font-size: 14px; color: var(--pale); }
+.moi button { background: none; border: 0; color: var(--ocean); text-decoration: underline; cursor: pointer; padding: 0 0 0 6px; }
+.etat { background: var(--or-fond); border-left: 4px solid var(--or); padding: 8px 12px; margin: 8px 0; font-size: 14px; }
+
+/* --- onglets : étiquettes de bagage --- */
+nav.onglets { display: flex; gap: 6px; overflow-x: auto; padding: 14px 0 0; position: sticky; top: 0; z-index: 5;
+  background: var(--papier); border-bottom: 2px solid var(--encre); scrollbar-width: none; }
+nav.onglets::-webkit-scrollbar { display: none; }
+nav button {
+  flex: 0 0 auto; border: 2px solid var(--encre); border-bottom: 0; background: var(--kraft);
+  padding: 8px 16px 6px 22px; font-size: 18px; cursor: pointer; border-radius: 8px 8px 0 0; position: relative;
+}
+nav button::before { content: ""; position: absolute; left: 8px; top: 50%; width: 7px; height: 7px; margin-top: -4px;
+  border-radius: 50%; border: 2px solid var(--encre); background: var(--papier); }
+nav button[aria-selected="true"] { background: var(--encre); color: var(--papier); }
+nav button[aria-selected="true"]::before { border-color: var(--papier); background: var(--encre); }
+nav button:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+
+section.vue { padding-top: 22px; }
+section.vue[hidden] { display: none; }
+h2 { font-size: 30px; margin: 26px 0 4px; }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 21px; margin: 22px 0 8px; }
+.lede { color: var(--encre-douce); margin: 0 0 14px; max-width: 64ch; font-size: 15px; }
+
+/* --- tuiles --- */
+.tuiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.tuile { background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; padding: 14px 16px; box-shadow: var(--ombre); }
+.tuile .lab { font-size: 15px; color: var(--pale); }
+.tuile .val { font-family: "Bebas Neue", sans-serif; font-size: 44px; line-height: 1; margin: 4px 0; }
+.tuile .val small { font-size: 22px; color: var(--pale); }
+.tuile .sous { font-size: 13px; color: var(--encre-douce); }
+.jauge { height: 6px; background: var(--kraft); border-radius: 3px; margin-top: 10px; overflow: hidden; }
+.jauge i { display: block; height: 100%; background: var(--or); }
+
+/* --- tableaux --- */
+.tableau { overflow-x: auto; background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; box-shadow: var(--ombre); }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th { text-align: left; font-size: 15px; color: var(--pale); padding: 10px 10px 6px; border-bottom: 2px solid var(--trait); white-space: nowrap; }
+td { padding: 7px 10px; border-bottom: 1px solid var(--trait); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+tr.total td { font-weight: 600; background: var(--kraft); }
+td input[type=text], td input[type=number], td input[type=date], td select, td textarea {
+  width: 100%; min-width: 70px; background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 5px 6px;
+}
+td input[type=text], td input[type=number], td input[type=date], td select, td textarea { border-bottom: 1px dashed var(--trait); }
+td select { min-width: 110px; }
+td textarea { overflow: hidden; line-height: 1.35; }
+td input:hover, td select:hover, td textarea:hover { border-color: var(--trait); }
+td input:focus, td select:focus, td textarea:focus { outline: none; border-color: var(--ocean); background: var(--papier); }
+td input[type=number] { text-align: right; max-width: 90px; }
+td textarea { resize: vertical; min-height: 34px; }
+.petit { font-size: 13px; color: var(--pale); }
+td.petit { white-space: nowrap; }
+
+/* --- tampons --- */
+.tampon { display: inline-block; font-family: "Bebas Neue", sans-serif; letter-spacing: .08em; font-size: 14px;
+  padding: 2px 9px 1px; border: 2px solid currentColor; border-radius: 5px; transform: rotate(-2deg); white-space: nowrap; }
+.t-present { color: var(--jungle); background: var(--jungle-fond); }
+.t-absent { color: var(--rouge); background: var(--rouge-fond); }
+.t-sans { color: var(--pale); }
+.t-compte { color: var(--ocean); background: var(--ocean-fond); }
+.choix { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.choix button { border: 2px solid var(--trait); background: transparent; border-radius: 5px; padding: 1px 8px; cursor: pointer;
+  font-family: "Bebas Neue", sans-serif; letter-spacing: .06em; font-size: 14px; color: var(--pale); }
+.choix button.on.present { border-color: var(--jungle); color: var(--jungle); background: var(--jungle-fond); }
+.choix button.on.absent { border-color: var(--rouge); color: var(--rouge); background: var(--rouge-fond); }
+.choix button.on.sans { border-color: var(--encre-douce); color: var(--encre); }
+
+/* --- barres buffet --- */
+.barre { display: grid; grid-template-columns: 170px 1fr 70px; gap: 10px; align-items: center; margin: 6px 0; font-size: 15px; }
+.barre .fond { height: 14px; background: var(--kraft); border-radius: 7px; overflow: hidden; }
+.barre .fond i { display: block; height: 100%; background: var(--ocean); }
+.barre .fond i.plein { background: var(--rouge); }
+
+/* --- commandes --- */
+.outils { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; align-items: center; }
+.outils input, .outils select { background: var(--carte); border: 1px solid var(--trait); border-radius: 6px; padding: 6px 10px; }
+.bouton { background: var(--encre); color: var(--papier); border: 0; border-radius: 6px; padding: 7px 14px; cursor: pointer; font-size: 15px; }
+.bouton.clair { background: transparent; color: var(--ocean); border: 1px dashed var(--ocean); }
+.retirer { background: none; border: 0; color: var(--pale); cursor: pointer; font-size: 18px; padding: 0 4px; }
+.retirer.arme { color: var(--rouge); font-size: 13px; }
+.vide { padding: 16px; color: var(--pale); font-style: italic; }
+.grille2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.prochain { background: var(--carte); border: 2px dashed var(--or); border-radius: 10px; padding: 10px 14px; margin: 12px 0 0; }
+
+/* --- porte --- */
+#porte { position: fixed; inset: 0; background: var(--papier); z-index: 20; display: grid; place-items: center; padding: 16px; }
+#porte[hidden] { display: none; }
+.billet { width: min(440px, 100%); background: var(--carte); border: 2px solid var(--encre); border-radius: 14px; padding: 26px; box-shadow: var(--ombre); }
+.billet h1 { font-size: 42px; margin: 0; line-height: 1; }
+.billet input { width: 100%; padding: 10px 12px; border: 1px solid var(--trait); border-radius: 8px; background: var(--papier); margin: 10px 0; }
+.porte-mot.rate { color: var(--rouge); }
+@media (max-width: 560px) {
+  .barre { grid-template-columns: 110px 1fr 54px; font-size: 14px; }
+  td, th { padding: 6px 6px; }
+  .cache-mobile { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="porte" hidden>
+  <div class="billet">
+    <div class="sur">Fête pour l'assemblée · 20 décembre</div>
+    <h1>Tour du monde</h1>
+    <p class="lede">L'espace des organisateurs. Entre ton adresse : tu reçois un lien de connexion par mail, sans mot de passe.</p>
+    <form id="porte-forme">
+      <label for="porte-mail" class="petit">Ton adresse mail</label>
+      <input id="porte-mail" type="email" autocomplete="email" required>
+      <button class="bouton" id="porte-ok" type="submit">Recevoir le lien</button>
+    </form>
+    <div id="porte-attente" hidden><p>Un lien vient de partir vers <b id="porte-adresse"></b>. Ouvre-le sur cet appareil.</p></div>
+    <div id="porte-refus" hidden><p>L'adresse <b id="porte-refus-mail"></b> n'est pas dans l'équipe. Demande à Mickaël de l'ajouter.</p></div>
+    <p class="porte-mot" id="porte-mot"></p>
+  </div>
+</div>
+
+<div class="page">
+  <header class="haut">
+    <div>
+      <div class="sur">Fête pour l'assemblée de La Tour-du-Pin</div>
+      <div class="compte"><span class="j" id="jours">—</span><span class="q" id="jours-q"></span></div>
+      <p class="ou"><b>Tour du monde</b> — dimanche 20 décembre 2026, à partir de 12 h · Salle des fêtes, 21 route de Saint Didier, Le Passage</p>
+    </div>
+    <div class="moi" id="moi" hidden>Connecté·e : <b id="moi-nom"></b> <button id="deconnexion">se déconnecter</button></div>
+  </header>
+  <div class="etat" id="etat" hidden></div>
+
+  <nav class="onglets" role="tablist" aria-label="Rubriques">
+    <button role="tab" data-vue="apercu" aria-selected="true">Où on en est</button>
+    <button role="tab" data-vue="foyers" aria-selected="false">Les foyers</button>
+    <button role="tab" data-vue="offrandes" aria-selected="false">Les offrandes</button>
+    <button role="tab" data-vue="buffet" aria-selected="false">Le buffet</button>
+    <button role="tab" data-vue="materiel" aria-selected="false">Le matériel</button>
+    <button role="tab" data-vue="apresmidi" aria-selected="false">L'après-midi</button>
+    <button role="tab" data-vue="dates" aria-selected="false">Dates &amp; décisions</button>
+  </nav>
+
+  <section class="vue" id="v-apercu"></section>
+  <section class="vue" id="v-foyers" hidden></section>
+  <section class="vue" id="v-offrandes" hidden></section>
+  <section class="vue" id="v-buffet" hidden></section>
+  <section class="vue" id="v-materiel" hidden></section>
+  <section class="vue" id="v-apresmidi" hidden></section>
+  <section class="vue" id="v-dates" hidden></section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="config.js?v=202611111649"></script>
+<script src="acces.js?v=202611111649"></script>
+<script>
+(function () {
+  "use strict";
+  var FETE_DATE = new Date(2026, 11, 20, 12, 0);
+  var BAREME = function (n) { return !n ? 0 : n === 1 ? 3 : n === 2 ? 5 : n === 3 ? 7 : 10; };
+  var PLATS = ["Salade", "Cake / quiche / pizza", "Apéritif", "Spécialité", "Fromage", "Plat chaud"];
+  var MODES = ["", "Espèces", "Virement", "Wero", "PayPal", "Boîte sur place"];
+  var vueActive = "apercu";
+
+  function $(id) { return document.getElementById(id); }
+  function h(t) { return String(t == null ? "" : t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function eur(x) { return (Math.round((x || 0) * 100) / 100).toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + " €"; }
+  function num(v) { var x = parseFloat(String(v).replace(",", ".")); return isNaN(x) ? 0 : x; }
+  function aujourdhui() { var d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+  function joursAvant(d) { return Math.round((d - aujourdhui()) / 86400000); }
+  function dateFr(iso) {
+    if (!iso) { return ""; }
+    var p = iso.split("-"), d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return d.toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+  }
+  function reglages() { return FETE.un("reglages", "tout") || {}; }
+  function foyers() {
+    return FETE.lire("foyers").sort(function (a, b) {
+      return (a.ordre || 99) - (b.ordre || 99) || String(a.nom).localeCompare(String(b.nom), "fr");
+    });
+  }
+  function presents() { return foyers().filter(function (f) { return f.statut === "present"; }); }
+  function maj(col, doc, champs) {
+    var n = Object.assign({}, doc, champs);
+    return FETE.ecrire(col, doc._id, n);
+  }
+
+  /* ---------------------------------------------------------- compte à rebours */
+  function compte() {
+    var j = joursAvant(new Date(2026, 11, 20));
+    $("jours").textContent = j > 0 ? "J−" + j : j === 0 ? "Jour J" : "Merci !";
+    $("jours-q").textContent = j > 1 ? "jours avant le départ" : j === 1 ? "demain, on embarque" : "";
+  }
+
+  /* ------------------------------------------------- liste modifiable générique */
+  /* champs : [{k, lab, type: text|num|date|check|select|area, options, largeur, n}] */
+  function liste(boite, col, champs, opts) {
+    opts = opts || {};
+    var docs = FETE.lire(col);
+    if (opts.filtre) { docs = docs.filter(opts.filtre); }
+    docs.sort(opts.tri || function (a, b) { return (a.ordre || 0) - (b.ordre || 0) || String(a._maj).localeCompare(String(b._maj)); });
+    var t = "<div class='tableau'><table><tr>" + champs.map(function (c) {
+      return "<th" + (c.type === "num" ? " class='n'" : "") + (c.mobile === false ? " class='cache-mobile'" : "") + ">" + h(c.lab) + "</th>";
+    }).join("") + (opts.extra ? "<th>" + h(opts.extra.lab) + "</th>" : "") + "<th></th></tr>";
+    if (!docs.length) { t += "<tr><td colspan='" + (champs.length + 2) + "' class='vide'>Rien pour l'instant.</td></tr>"; }
+    docs.forEach(function (d) {
+      t += "<tr data-id='" + h(d._id) + "'>" + champs.map(function (c) {
+        var v = d[c.k], cls = (c.type === "num" ? "n" : "") + (c.mobile === false ? " cache-mobile" : "");
+        var w = c.largeur ? " style='min-width:" + c.largeur + "'" : "";
+        var inp;
+        if (c.type === "check") { inp = "<input type='checkbox' data-k='" + c.k + "'" + (v ? " checked" : "") + ">"; }
+        else if (c.type === "select") {
+          inp = "<select data-k='" + c.k + "'>" + c.options.map(function (o) {
+            return "<option" + (o === (v || "") ? " selected" : "") + ">" + h(o) + "</option>"; }).join("") + "</select>";
+        }
+        else if (c.type === "area") { inp = "<textarea rows='1' data-k='" + c.k + "'" + w + ">" + h(v) + "</textarea>"; }
+        else { inp = "<input type='" + (c.type === "num" ? "number" : c.type === "date" ? "date" : "text") + "' data-k='" + c.k + "' value='" + h(v) + "'" + w + ">"; }
+        return "<td class='" + cls + "'>" + inp + "</td>";
+      }).join("") + (opts.extra ? "<td class='n'>" + opts.extra.f(d) + "</td>" : "") +
+        "<td><button class='retirer' title='Retirer cette ligne'>×</button></td></tr>";
+    });
+    if (opts.total) { t += opts.total(docs); }
+    t += "</table></div><p><button class='bouton clair ajout'>+ " + h(opts.ajout || "Ajouter une ligne") + "</button></p>";
+    boite.innerHTML = t;
+    boite.querySelectorAll("tr[data-id]").forEach(function (tr) {
+      var d = FETE.un(col, tr.getAttribute("data-id"));
+      tr.querySelectorAll("[data-k]").forEach(function (el) {
+        el.addEventListener("change", function () {
+          var c = champs.filter(function (x) { return x.k === el.getAttribute("data-k"); })[0];
+          var v = el.type === "checkbox" ? el.checked : c.type === "num" ? num(el.value) : el.value;
+          var o = {}; o[c.k] = v;
+          maj(col, FETE.un(col, d._id), o);
+        });
+      });
+      var r = tr.querySelector(".retirer");
+      r.addEventListener("click", function () {
+        if (!r.classList.contains("arme")) { r.classList.add("arme"); r.textContent = "retirer ?"; setTimeout(function () { r.classList.remove("arme"); r.textContent = "×"; }, 3000); return; }
+        maj(col, FETE.un(col, d._id), { retire: true });
+      });
+    });
+    boite.querySelector(".ajout").addEventListener("click", function () {
+      var n = Object.assign({ ordre: Date.now() / 1e13 + 1000 }, opts.defaut || {});
+      FETE.nouveau(col, n);
+    });
+  }
+
+  /* ---------------------------------------------------------------- aperçu */
+  function vApercu() {
+    var F = foyers(), P = presents(), R = reglages();
+    var rep = F.filter(function (f) { return f.statut && f.statut !== "sans"; });
+    var pers = P.reduce(function (a, f) { return a + num(f.personnes); }, 0);
+    var attendu = P.reduce(function (a, f) { return a + BAREME(num(f.personnes)); }, 0);
+    var recu = F.reduce(function (a, f) { return a + num(f.recu); }, 0);
+    var dep = FETE.lire("depenses").reduce(function (a, d) { return a + num(d.reel); }, 0);
+    var listeF = F.filter(function (f) { return f.groupe !== "Invités"; });
+    var taux = listeF.length ? Math.round(100 * listeF.filter(function (f) { return f.statut !== "sans"; }).length / listeF.length) : 0;
+    var jal = FETE.lire("jalons").filter(function (j) { return !j.fait && j.date; }).sort(function (a, b) { return a.date.localeCompare(b.date); })[0];
+    var tu = [
+      ["Foyers qui ont répondu", rep.length + "<small> / " + F.length + "</small>", taux + " % de la liste", taux],
+      ["Attendus", String(pers), P.length + " foyers présents · " + (R.anneeDerniere || 124) + " l'an dernier"],
+      ["Offrandes", eur(recu).replace(" €", "") + "<small> / " + eur(attendu) + "</small>", "reste " + eur(Math.max(0, attendu - recu)) + " · dépensé " + eur(dep), attendu ? Math.round(100 * recu / attendu) : 0],
+      ["Sans réponse", String(F.filter(function (f) { return f.statut === "sans"; }).length), "foyers à qui demander"]
+    ];
+    var html = "<h2>Où on en est</h2><p class='lede'>Tout ce qui est saisi dans les onglets se retrouve ici, pour toute l'équipe, en direct.</p>" +
+      "<div class='tuiles'>" + tu.map(function (t) {
+        return "<div class='tuile'><div class='lab'>" + t[0] + "</div><div class='val'>" + t[1] + "</div><div class='sous'>" + t[2] + "</div>" +
+          (t[3] !== undefined ? "<div class='jauge'><i style='width:" + Math.min(100, t[3]) + "%'></i></div>" : "") + "</div>";
+      }).join("") + "</div>";
+    if (jal) { html += "<div class='prochain'><b>Prochaine échéance</b> — " + dateFr(jal.date) + " (" + (joursAvant(new Date(jal.date)) <= 0 ? "aujourd'hui ou dépassée" : "dans " + joursAvant(new Date(jal.date)) + " j") + ") : " + h(jal.quoi) + (jal.qui ? " · " + h(jal.qui) : "") + "</div>"; }
+    // par groupe
+    var gs = {};
+    F.forEach(function (f) {
+      var g = gs[f.groupe] = gs[f.groupe] || { foyers: 0, rep: 0, pres: 0, abs: 0, pers: 0, sans: 0 };
+      g.foyers++; if (f.statut !== "sans") { g.rep++; }
+      if (f.statut === "present") { g.pres++; g.pers += num(f.personnes); }
+      if (f.statut === "absent") { g.abs++; } if (f.statut === "sans") { g.sans++; }
+    });
+    var noms = Object.keys(gs).sort(function (a, b) { return (a === "Invités") - (b === "Invités") || a.localeCompare(b, "fr", { numeric: true }); });
+    html += "<h3>Par groupe</h3><div class='tableau'><table><tr><th>Groupe</th><th class='n'>Foyers</th><th class='n'>Ont répondu</th><th class='n'>Présents</th><th class='n'>Absents</th><th class='n'>Personnes</th><th class='n'>Sans réponse</th></tr>" +
+      noms.map(function (n) { var g = gs[n]; return "<tr><td>" + h(n) + "</td><td class='n'>" + g.foyers + "</td><td class='n'>" + g.rep + "</td><td class='n'>" + g.pres + "</td><td class='n'>" + g.abs + "</td><td class='n'>" + g.pers + "</td><td class='n'>" + g.sans + "</td></tr>"; }).join("") +
+      "</table></div>";
+    var mat = FETE.lire("materiel").filter(function (m) { return !m.fait && num(m.besoin) > num(m.stock); });
+    html += "<h3>À acheter</h3>" + (mat.length ? "<div class='tableau'><table><tr><th>Quoi</th><th class='n'>Manque</th><th>Qui</th></tr>" +
+      mat.map(function (m) { return "<tr><td>" + h(m.quoi) + "</td><td class='n'>" + (num(m.besoin) - num(m.stock)) + "</td><td>" + h(m.qui) + "</td></tr>"; }).join("") + "</table></div>"
+      : "<p class='vide'>Rien ne manque d'après l'onglet Matériel.</p>");
+    $("v-apercu").innerHTML = html;
+  }
+
+  /* ---------------------------------------------------------------- foyers */
+  var filtreF = { groupe: "", statut: "", q: "" };
+  function tampon(f) {
+    var s = f.statut || "sans";
+    var lab = { present: "Présent", absent: "Absent", sans: "Sans réponse", compte: "Compté avec" }[s] || s;
+    return "<span class='tampon t-" + s + "'>" + lab + "</span>";
+  }
+  function vFoyers() {
+    var F = foyers();
+    var groupes = []; F.forEach(function (f) { if (groupes.indexOf(f.groupe) < 0) { groupes.push(f.groupe); } });
+    var vis = F.filter(function (f) {
+      return (!filtreF.groupe || f.groupe === filtreF.groupe) && (!filtreF.statut || f.statut === filtreF.statut) &&
+        (!filtreF.q || (f.nom + " " + f.membres).toLowerCase().indexOf(filtreF.q.toLowerCase()) >= 0);
+    });
+    var html = "<h2>Les foyers</h2><p class='lede'>Un foyer par ligne, rangé par groupe de prédication. Coche la réponse et le nombre de personnes : tout le site se met à jour. Les étudiants et invités se rangent dans « Invités ».</p>" +
+      "<div class='outils'><select id='f-g'><option value=''>Tous les groupes</option>" + groupes.map(function (g) { return "<option" + (g === filtreF.groupe ? " selected" : "") + ">" + h(g) + "</option>"; }).join("") + "</select>" +
+      "<select id='f-s'>" + [["", "Toutes les réponses"], ["sans", "Sans réponse"], ["present", "Présents"], ["absent", "Absents"], ["compte", "Comptés avec un proche"]].map(function (o) { return "<option value='" + o[0] + "'" + (o[0] === filtreF.statut ? " selected" : "") + ">" + o[1] + "</option>"; }).join("") + "</select>" +
+      "<input id='f-q' type='search' placeholder='Chercher un nom' value='" + h(filtreF.q) + "'>" +
+      "<span class='petit'>" + vis.length + " foyers</span></div>" +
+      "<div class='tableau'><table><tr><th>Foyer</th><th class='cache-mobile'>Groupe</th><th>Réponse</th><th class='n'>Pers.</th><th>Note</th></tr>" +
+      vis.map(function (f) {
+        return "<tr data-id='" + h(f._id) + "'><td><b>" + h(f.nom) + "</b><br><span class='petit'>" + h(f.membres) + "</span></td>" +
+          "<td class='cache-mobile petit'>" + h(f.groupe) + "</td>" +
+          "<td><div class='choix'>" + [["present", "Présent"], ["absent", "Absent"], ["sans", "?"]].map(function (o) {
+            return "<button class='" + o[0] + ((f.statut || "sans") === o[0] ? " on" : "") + "' data-s='" + o[0] + "'>" + o[1] + "</button>"; }).join("") +
+          (f.statut === "compte" ? " " + tampon(f) + " <span class='petit'>" + h(f.avec) + "</span>" : "") + "</div></td>" +
+          "<td class='n'><input type='number' min='0' data-k='personnes' value='" + (f.statut === "present" ? h(f.personnes || "") : "") + "'" + (f.statut === "present" ? "" : " disabled") + "></td>" +
+          "<td><input type='text' data-k='note' style='min-width:220px' value='" + h(f.note) + "' placeholder='—'></td></tr>";
+      }).join("") + "</table></div>" +
+      "<h3>Ajouter un foyer</h3><div class='outils'><input id='nf-nom' placeholder='Nom du foyer'><input id='nf-m' placeholder='Prénoms'>" +
+      "<select id='nf-g'><option>Invités</option>" + groupes.filter(function (g) { return g !== "Invités"; }).map(function (g) { return "<option>" + h(g) + "</option>"; }).join("") + "</select>" +
+      "<button class='bouton' id='nf-ok'>Ajouter</button></div>";
+    $("v-foyers").innerHTML = html;
+    $("f-g").onchange = function () { filtreF.groupe = this.value; vFoyers(); };
+    $("f-s").onchange = function () { filtreF.statut = this.value; vFoyers(); };
+    $("f-q").oninput = function () { filtreF.q = this.value; var p = this.selectionStart; vFoyers(); $("f-q").focus(); $("f-q").setSelectionRange(p, p); };
+    $("v-foyers").querySelectorAll("tr[data-id]").forEach(function (tr) {
+      var id = tr.getAttribute("data-id");
+      tr.querySelectorAll("[data-s]").forEach(function (b) {
+        b.onclick = function () {
+          var f = FETE.un("foyers", id), s = b.getAttribute("data-s");
+          var o = { statut: s };
+          if (s === "present" && !num(f.personnes)) { o.personnes = Math.max(1, (f.membres || "").split(",").filter(Boolean).length); }
+          maj("foyers", f, o);
+        };
+      });
+      tr.querySelectorAll("[data-k]").forEach(function (el) {
+        el.onchange = function () {
+          var o = {}; o[el.getAttribute("data-k")] = el.type === "number" ? num(el.value) : el.value;
+          maj("foyers", FETE.un("foyers", id), o);
+        };
+      });
+    });
+    $("nf-ok").onclick = function () {
+      var nom = $("nf-nom").value.trim(); if (!nom) { $("nf-nom").focus(); return; }
+      FETE.nouveau("foyers", { nom: nom, membres: $("nf-m").value.trim(), groupe: $("nf-g").value, statut: "sans", ordre: 90 });
+    };
+  }
+
+  /* ------------------------------------------------------------- offrandes */
+  var seulementDu = false;
+  function vOffrandes() {
+    var P = foyers().filter(function (f) { return f.statut === "present" || num(f.recu) > 0; });
+    if (seulementDu) { P = P.filter(function (f) { return num(f.recu) < BAREME(num(f.personnes)); }); }
+    var tous = foyers();
+    var attendu = tous.filter(function (f) { return f.statut === "present"; }).reduce(function (a, f) { return a + BAREME(num(f.personnes)); }, 0);
+    var recu = tous.reduce(function (a, f) { return a + num(f.recu); }, 0);
+    var dep = FETE.lire("depenses"), depR = dep.reduce(function (a, d) { return a + num(d.reel); }, 0);
+    var R = reglages();
+    var html = "<h2>Les offrandes</h2><p class='lede'>Participation volontaire par foyer : 3 € pour une personne, 5 € pour deux, 7 € pour trois, 10 € à partir de quatre. Règlement souhaité avant le 23 novembre. Saisis chaque somme dès qu'elle arrive, espèces comprises.</p>" +
+      "<div class='tuiles'><div class='tuile'><div class='lab'>Reçu</div><div class='val'>" + eur(recu) + "</div><div class='sous'>sur " + eur(attendu) + " suggérés</div><div class='jauge'><i style='width:" + (attendu ? Math.min(100, 100 * recu / attendu) : 0) + "%'></i></div></div>" +
+      "<div class='tuile'><div class='lab'>Dépensé</div><div class='val'>" + eur(depR) + "</div><div class='sous'>prévu " + eur(dep.reduce(function (a, d) { return a + num(d.prevu); }, 0)) + "</div></div>" +
+      "<div class='tuile'><div class='lab'>Caisse</div><div class='val'>" + eur(num(R.caisseDepart) + recu - depR) + "</div><div class='sous'>" + (num(R.caisseDepart) ? "dont " + eur(R.caisseDepart) + " de caisse antérieure" : "reçu moins dépensé") + "</div></div></div>" +
+      "<h3>Par foyer</h3><div class='outils'><label><input type='checkbox' id='o-du'" + (seulementDu ? " checked" : "") + "> seulement ceux qui n'ont pas encore réglé</label></div>" +
+      "<div class='tableau'><table><tr><th>Foyer</th><th class='n'>Pers.</th><th class='n'>Suggéré</th><th class='n'>Reçu</th><th>Mode</th><th>État</th></tr>" +
+      (P.length ? P.map(function (f) {
+        var du = BAREME(num(f.personnes)), r = num(f.recu);
+        var et = r >= du && du ? "<span class='tampon t-present'>Réglé</span>" : r > 0 ? "<span class='tampon t-compte'>En partie</span>" : "<span class='tampon t-sans'>À venir</span>";
+        return "<tr data-id='" + h(f._id) + "'><td>" + h(f.nom) + "<br><span class='petit'>" + h(f.groupe) + "</span></td><td class='n'>" + (num(f.personnes) || "") + "</td><td class='n'>" + eur(du) + "</td>" +
+          "<td class='n'><input type='number' step='0.5' min='0' data-k='recu' value='" + (r || "") + "'></td>" +
+          "<td><select data-k='mode'>" + MODES.map(function (m) { return "<option" + (m === (f.mode || "") ? " selected" : "") + ">" + m + "</option>"; }).join("") + "</select></td><td>" + et + "</td></tr>";
+      }).join("") : "<tr><td colspan='6' class='vide'>Aucun foyer à afficher.</td></tr>") + "</table></div>" +
+      "<h3>Les dépenses</h3><div id='o-dep'></div>";
+    $("v-offrandes").innerHTML = html;
+    $("o-du").onchange = function () { seulementDu = this.checked; vOffrandes(); };
+    $("v-offrandes").querySelectorAll("tr[data-id] [data-k]").forEach(function (el) {
+      el.onchange = function () {
+        var id = el.closest("tr").getAttribute("data-id"), o = {};
+        o[el.getAttribute("data-k")] = el.type === "number" ? num(el.value) : el.value;
+        maj("foyers", FETE.un("foyers", id), o);
+      };
+    });
+    liste($("o-dep"), "depenses", [
+      { k: "poste", lab: "Poste", largeur: "180px" }, { k: "prevu", lab: "Prévu", type: "num" }, { k: "reel", lab: "Réel", type: "num" },
+      { k: "paye", lab: "Payé par" }, { k: "note", lab: "Remarque", mobile: false }
+    ], { ajout: "Ajouter une dépense", total: function (d) {
+      return "<tr class='total'><td>Total</td><td class='n'>" + eur(d.reduce(function (a, x) { return a + num(x.prevu); }, 0)) + "</td><td class='n'>" + eur(d.reduce(function (a, x) { return a + num(x.reel); }, 0)) + "</td><td colspan='3'></td></tr>"; } });
+  }
+
+  /* ---------------------------------------------------------------- buffet */
+  function vBuffet() {
+    var P = presents(), R = reglages(), Q = R.quotas || {};
+    var compte = {}; PLATS.forEach(function (p) { compte[p] = 0; });
+    P.forEach(function (f) { if (f.plat) { compte[f.plat] = (compte[f.plat] || 0) + 1; } });
+    var html = "<h2>Le buffet</h2><p class='lede'>Les familles n'apportent que du salé et une boisson : desserts, café et thé sont fournis. Chaque catégorie a un quota — quand elle est pleine, on oriente vers une autre. Les plats sans gluten se placent en bout de buffet.</p>" +
+      PLATS.map(function (p) {
+        var q = num(Q[p]), n = compte[p] || 0;
+        return "<div class='barre'><span>" + h(p) + "</span><span class='fond'><i class='" + (q && n >= q ? "plein" : "") + "' style='width:" + (q ? Math.min(100, 100 * n / q) : 0) + "%'></i></span><span class='n'>" + n + (q ? " / " + q : "") + "</span></div>";
+      }).join("") +
+      "<p class='petit'>" + P.filter(function (f) { return !f.plat; }).length + " foyers présents n'ont pas encore de plat · " +
+      P.filter(function (f) { return f.boisson; }).length + " boissons annoncées · " + P.filter(function (f) { return f.sansGluten; }).length + " plats sans gluten.</p>" +
+      "<h3>Quotas</h3><div class='outils'>" + PLATS.map(function (p) {
+        return "<label class='petit'>" + h(p) + " <input type='number' min='0' style='width:64px' data-q='" + h(p) + "' value='" + (Q[p] || "") + "'></label>"; }).join("") + "</div>" +
+      "<h3>Par foyer présent</h3><div class='tableau'><table><tr><th>Foyer</th><th>Plat</th><th>Boisson</th><th>Sans gluten</th><th class='cache-mobile'>Précision</th></tr>" +
+      (P.length ? P.map(function (f) {
+        return "<tr data-id='" + h(f._id) + "'><td>" + h(f.nom) + "</td><td><select data-k='plat'><option></option>" + PLATS.map(function (p) {
+          return "<option" + (p === f.plat ? " selected" : "") + ">" + h(p) + "</option>"; }).join("") + "</select></td>" +
+          "<td><input type='checkbox' data-k='boisson'" + (f.boisson ? " checked" : "") + "></td><td><input type='checkbox' data-k='sansGluten'" + (f.sansGluten ? " checked" : "") + "></td>" +
+          "<td class='cache-mobile'><input type='text' data-k='platDetail' value='" + h(f.platDetail) + "' placeholder='ex. taboulé'></td></tr>";
+      }).join("") : "<tr><td colspan='5' class='vide'>Aucun foyer présent pour l'instant.</td></tr>") + "</table></div>";
+    $("v-buffet").innerHTML = html;
+    $("v-buffet").querySelectorAll("[data-q]").forEach(function (el) {
+      el.onchange = function () {
+        var r = reglages(), q = Object.assign({}, r.quotas || {}); q[el.getAttribute("data-q")] = num(el.value);
+        FETE.ecrire("reglages", "tout", Object.assign({}, r, { quotas: q }));
+      };
+    });
+    $("v-buffet").querySelectorAll("tr[data-id] [data-k]").forEach(function (el) {
+      el.onchange = function () {
+        var o = {}; o[el.getAttribute("data-k")] = el.type === "checkbox" ? el.checked : el.value;
+        maj("foyers", FETE.un("foyers", el.closest("tr").getAttribute("data-id")), o);
+      };
+    });
+  }
+
+  /* -------------------------------------------------------------- matériel */
+  function vMateriel() {
+    $("v-materiel").innerHTML = "<h2>Le matériel</h2><p class='lede'>Ce qu'on a déjà, ce qu'il faut, et qui s'en occupe. La colonne « Manque » se calcule toute seule et alimente la liste « À acheter » de l'aperçu.</p><div id='m-l'></div>";
+    liste($("m-l"), "materiel", [
+      { k: "quoi", lab: "Quoi", largeur: "170px" }, { k: "stock", lab: "En stock", type: "num" }, { k: "besoin", lab: "Besoin", type: "num" },
+      { k: "qui", lab: "Qui s'en occupe" }, { k: "fait", lab: "Fait", type: "check" }, { k: "note", lab: "Note", mobile: false }
+    ], { ajout: "Ajouter du matériel", extra: { lab: "Manque", f: function (d) { var m = num(d.besoin) - num(d.stock); return m > 0 ? "<b>" + m + "</b>" : "—"; } } });
+  }
+
+  /* ----------------------------------------------------------- après-midi */
+  function vApresMidi() {
+    $("v-apresmidi").innerHTML = "<h2>L'après-midi</h2><p class='lede'>Le déroulé heure par heure, puis les animations : chaque idée peut être proposée, retenue ou écartée. Thème : chacun vient aux couleurs d'un pays.</p>" +
+      "<h3>Le déroulé</h3><div id='a-d'></div><h3>Les animations et les jeux</h3><div id='a-a'></div>";
+    liste($("a-d"), "deroule", [
+      { k: "heure", lab: "Heure", largeur: "70px" }, { k: "quoi", lab: "Quoi", type: "area", largeur: "220px" }, { k: "qui", lab: "Qui" }, { k: "note", lab: "Note", mobile: false }
+    ], { ajout: "Ajouter un moment", tri: function (a, b) { return String(a.heure || "99").localeCompare(String(b.heure || "99")); } });
+    liste($("a-a"), "animations", [
+      { k: "titre", lab: "Animation", largeur: "160px" }, { k: "detail", lab: "Comment ça se passe", type: "area", largeur: "240px" },
+      { k: "qui", lab: "Qui l'anime" }, { k: "propose", lab: "Proposé par", mobile: false },
+      { k: "statut", lab: "Statut", type: "select", options: ["Idée", "Retenue", "Prête", "Écartée"] }
+    ], { ajout: "Proposer une animation", defaut: { statut: "Idée" } });
+  }
+
+  /* ------------------------------------------------------------------ dates */
+  function vDates() {
+    $("v-dates").innerHTML = "<h2>Les dates clés</h2><p class='lede'>Coche ce qui est fait : la prochaine échéance non faite remonte dans l'aperçu.</p><div id='d-j'></div>" +
+      "<h2>Ce qui reste à trancher</h2><p class='lede'>Une question, puis la décision prise et par qui.</p><div id='d-o'></div>";
+    liste($("d-j"), "jalons", [
+      { k: "date", lab: "Date", type: "date" }, { k: "quoi", lab: "Quoi", type: "area", largeur: "220px" }, { k: "qui", lab: "Qui" }, { k: "fait", lab: "Fait", type: "check" }
+    ], { ajout: "Ajouter une date", tri: function (a, b) { return String(a.date || "9").localeCompare(String(b.date || "9")); } });
+    liste($("d-o"), "ouverts", [
+      { k: "question", lab: "Question", type: "area", largeur: "220px" }, { k: "decision", lab: "Décision", type: "area", largeur: "200px" },
+      { k: "par", lab: "Par qui" }, { k: "tranche", lab: "Tranché", type: "check" }
+    ], { ajout: "Ajouter une question", tri: function (a, b) { return (a.tranche ? 1 : 0) - (b.tranche ? 1 : 0) || (a.ordre || 0) - (b.ordre || 0); } });
+  }
+
+  function ajuster() {
+    document.querySelectorAll('td textarea').forEach(function (t) {
+      t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px';
+      if (!t.dataset.auto) { t.dataset.auto = 1; t.addEventListener('input', function () { t.style.height = 'auto'; t.style.height = (t.scrollHeight + 2) + 'px'; }); }
+    });
+  }
+
+  var VUES = { apercu: vApercu, foyers: vFoyers, offrandes: vOffrandes, buffet: vBuffet, materiel: vMateriel, apresmidi: vApresMidi, dates: vDates };
+
+  /* Une saisie des autres ne doit pas effacer ce qu'on est en train de taper :
+     si un champ de la vue a le focus, on redessine à la sortie du champ. */
+  var enAttente = false;
+  function redessiner() {
+    var a = document.activeElement, vue = $("v-" + vueActive);
+    if (a && vue.contains(a) && /INPUT|TEXTAREA|SELECT/.test(a.tagName) && a.id !== "f-q") { enAttente = true; return; }
+    enAttente = false;
+    var y = window.scrollY;
+    VUES[vueActive]();
+    ajuster();
+    window.scrollTo(0, y);
+  }
+  document.addEventListener("focusout", function () { if (enAttente) { setTimeout(redessiner, 50); } });
+
+  function montrer(v) {
+    vueActive = v;
+    document.querySelectorAll("nav [data-vue]").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-vue") === v ? "true" : "false"); });
+    Object.keys(VUES).forEach(function (k) { $("v-" + k).hidden = k !== v; });
+    try { localStorage.setItem("fete-vue", v); } catch (e) {}
+    VUES[v]();
+    ajuster();
+  }
+
+  window.demarrer = function () {
+    compte();
+    document.querySelectorAll("nav [data-vue]").forEach(function (b) { b.onclick = function () { montrer(b.getAttribute("data-vue")); }; });
+    var v = "apercu"; try { v = localStorage.getItem("fete-vue") || "apercu"; } catch (e) {}
+    montrer(VUES[v] ? v : "apercu");
+    FETE.ecouter(function () { redessiner(); });
+  };
+})();
+</script>
+</body>
+</html>
