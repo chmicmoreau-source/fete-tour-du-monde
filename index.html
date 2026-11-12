@@ -244,8 +244,8 @@ td.petit { white-space: nowrap; }
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="config.js?v=202611122102"></script>
-<script src="acces.js?v=202611122102"></script>
+<script src="config.js?v=202611122111"></script>
+<script src="acces.js?v=202611122111"></script>
 <script>
 (function () {
   "use strict";
@@ -547,9 +547,10 @@ td.petit { white-space: nowrap; }
       "<div><b>Office (cuisine)</b>Environ 12 m × 4,8 m. Four (plaques 50 × 35 cm), gazinière, chauffe-plat, frigo professionnel double porte (2 × 53 cm, 1,56 m de haut), frigo et congélateur coffre, lave-vaisselle professionnel (facturé en supplément s'il sert), hotte, double évier inox, placard de vaisselle.</div>" +
       "<div><b>Chauffage</b>Appuyer sur le bouton « marche forcée » : le chauffage tourne 2 h. La température se règle au thermostat. Penser à le lancer avant l'arrivée des invités. Le gaz est facturé par la mairie selon la consommation.</div>" +
       "<div><b>Le reste</b>Trois WC (dont un côté hommes avec urinoirs), un vestiaire avec portants et cintres, un local de rangement (balais).</div>" +
-      "</div><h3>Le plan des tables</h3><p class='lede'>Tables de 6 en quinconce, d'après le croquis de Gaëlle. Deux versions, car la longueur de la salle reste à mesurer (18,9 m ou 28 m). " +
+      "</div><h3>Le plan des tables</h3><p class='lede'>Tables de 6 en quinconce, d'après le croquis de Gaëlle. En quinconce puis en épi, chacun en deux versions, car la longueur de la salle reste à mesurer (18,9 m ou 28 m). " +
       "<a href='plan-tables.html' target='_blank' rel='noopener'>Ouvrir le plan en grand ↗</a></p>" +
-      "<iframe src='plan-tables.html' title='Plan des tables' loading='lazy' style='width:100%;height:1100px;border:1px solid var(--trait);border-radius:12px;background:#FFF9F1'></iframe>" +
+      "<p class='outils'><a class='bouton clair' href='plan-tables.html#quinconce' target='_blank' rel='noopener'>Plan en quinconce ↗</a> <a class='bouton clair' href='plan-tables.html#epi' target='_blank' rel='noopener'>Plan en épi ↗</a></p>" +
+      "<iframe id='plan-cadre' src='plan-tables.html' title='Plan des tables : quinconce puis épi' style='width:100%;height:2600px;border:1px solid var(--trait);border-radius:12px;background:#FFF9F1' onload=\"try{this.style.height=(this.contentWindow.document.documentElement.scrollHeight+20)+'px'}catch(e){}\"></iframe>" +
       "<h3>Les photos</h3><div class='galerie'>" +
       PHOTOS.map(function (t, i) { var n = (i < 10 ? "0" : "") + i + ".jpg";
         return "<a href='salle/" + n + "' target='_blank' rel='noopener'><img loading='lazy' src='salle/mini/" + n + "' alt='" + h(t) + "'><span>" + h(t) + "</span></a>"; }).join("") +
